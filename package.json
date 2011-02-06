@@ -1,0 +1,24 @@
+{
+    "name": "bitcoin-impl",
+    "version": "0.0.1",
+    
+    "description": "A library of JavaScript/C++ Bitcoin components. (And eventually, a full client made from them.)",
+    "url": "https://github.com/andrewschaaf/node-bitcoin-impl",
+    
+    "main": "build-coffee/main.js",
+    
+    "scripts": {
+      "install": "node-waf configure build"
+    },
+    
+    "dependencies": {
+      
+    },
+    
+    "author": "Andrew Schaaf <andrew@andrewschaaf.com>",
+    
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/andrewschaaf/node-bitcoin-impl.git"
+    }
+}
