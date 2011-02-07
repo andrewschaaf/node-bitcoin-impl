@@ -6,13 +6,15 @@
     "url": "https://github.com/andrewschaaf/node-bitcoin-impl",
     
     "main": "build-coffee/main.js",
-    
+    "bin": {
+      "node-bitcoin-impl": "build-coffee/command.js"
+    },
     "scripts": {
       "install": "node-waf configure build"
     },
     
     "dependencies": {
-      
+      "optimist": ">=0.1.5"
     },
     
     "author": "Andrew Schaaf <andrew@andrewschaaf.com>",
