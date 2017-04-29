@@ -1,10 +1,13 @@
-(function() {
-  var IP_12, assert, h;
+((() => {
+  var IP_12;
+  var assert;
+  var h;
   assert = require('assert');
   IP_12 = require('./helpers').IP_12;
   h = require('hexy').hexy;
-  exports.unpack_net_addr = function(u) {
-    var ip12, x;
+  exports.unpack_net_addr = u => {
+    var ip12;
+    var x;
     x = {};
     x.services = u.le64();
     console.log('services', x.services);
@@ -17,7 +20,5 @@
     x.port = u.be16();
     return x;
   };
-  exports.unpack32 = function(d) {
-    return d[0] + (d[1] << 8) + (d[2] << 16) + (d[3] * 0x1000000);
-  };
-}).call(this);
+  exports.unpack32 = d => d[0] + (d[1] << 8) + (d[2] << 16) + (d[3] * 0x1000000);
+})).call(this);

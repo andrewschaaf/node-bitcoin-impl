@@ -1,20 +1,40 @@
-(function() {
-  var ByteQueue, MessageParser, PADDED64_NAME_MAP, Unpacker, assert, events, f, h, k, k2, nullPad12, payload_parsers, sha256_sha256_4, unpack32, unpack_net_addr, _ref, _ref2;
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+((() => {
+  var ByteQueue;
+  var MessageParser;
+  var PADDED64_NAME_MAP;
+  var Unpacker;
+  var assert;
+  var events;
+  var f;
+  var h;
+  var k;
+  var k2;
+  var nullPad12;
+  var payload_parsers;
+  var sha256_sha256_4;
+  var unpack32;
+  var unpack_net_addr;
+  var _ref;
+  var _ref2;
+  var __hasProp = Object.prototype.hasOwnProperty;
+
+  var __extends = (child, parent) => {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
     ctor.prototype = parent.prototype;
     child.prototype = new ctor;
     child.__super__ = parent.prototype;
     return child;
-  }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  };
+
+  var __bind = (fn, me) => function(...args) { return fn.apply(me, args); };
   assert = require('assert');
   events = require('events');
   h = require('hexy').hexy;
   _ref = require('./helpers'), ByteQueue = _ref.ByteQueue, Unpacker = _ref.Unpacker, nullPad12 = _ref.nullPad12, sha256_sha256_4 = _ref.sha256_sha256_4;
   _ref2 = require('./value_unpackers'), unpack_net_addr = _ref2.unpack_net_addr, unpack32 = _ref2.unpack32;
   payload_parsers = {
-    version: function(u) {
+    version(u) {
       var x;
       x = {};
       x.version = u.le32();
@@ -27,7 +47,7 @@
       x.start_height = u.le32();
       return x;
     },
-    verack: function(u) {
+    verack(u) {
       return {};
     }
   };
@@ -40,7 +60,7 @@
     payload_parsers[k2] = f;
     delete payload_parsers[k];
   }
-  exports.MessageParser = MessageParser = (function() {
+  exports.MessageParser = MessageParser = ((() => {
     __extends(MessageParser, events.EventEmitter);
     function MessageParser(expectedMagic, conn) {
       this.conn = conn;
@@ -61,7 +81,16 @@
       }
     };
     MessageParser.prototype.parse = function() {
-      var command64, commandName, commandPadded, header, headerLength, payload, payloadHash, payloadLength, x, _results;
+      var command64;
+      var commandName;
+      var commandPadded;
+      var header;
+      var headerLength;
+      var payload;
+      var payloadHash;
+      var payloadLength;
+      var x;
+      var _results;
       _results = [];
       while (this.q.length >= 20) {
         if (this.q.peekrange(0, 4).toString('base64') !== this.expectedMagic64) {
@@ -97,5 +126,5 @@
       return _results;
     };
     return MessageParser;
-  })();
-}).call(this);
+  }))();
+})).call(this);

@@ -1,7 +1,8 @@
-(function() {
-  var ByteQueue, buf;
+((() => {
+  var ByteQueue;
+  var buf;
   ByteQueue = require('./../encoding/helpers').ByteQueue;
-  buf = function(x) {
+  buf = x => {
     if (x instanceof Buffer) {
       return x;
     } else {
@@ -9,7 +10,7 @@
     }
   };
   module.exports = {
-    onebuf: function(t) {
+    onebuf(t) {
       var q;
       q = new ByteQueue;
       t.equal(q.length, 0);
@@ -61,4 +62,4 @@
   if (module === require.main) {
     require('async_testing').run(__filename, process.ARGV);
   }
-}).call(this);
+})).call(this);
