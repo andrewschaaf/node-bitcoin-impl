@@ -1,5 +1,30 @@
-(function() {
-  var EMPTY_BUFFER, IP_12, MAIN_MAGIC, NULL_PADDED_COMMAND_NAMES, assert, commandName, crypto, helpers, joinBuffers, message_packers, nullPad12, pack16, pack16be, pack32, pack32_be, pack64, pack_inventory_payload, pack_message_header, pack_messages, pack_net_addr, pack_tx, pack_tx_ins, pack_tx_outs, pack_uint, sha256_sha256_4, _ref;
+((() => {
+  var EMPTY_BUFFER;
+  var IP_12;
+  var MAIN_MAGIC;
+  var NULL_PADDED_COMMAND_NAMES;
+  var assert;
+  var commandName;
+  var crypto;
+  var helpers;
+  var joinBuffers;
+  var message_packers;
+  var nullPad12;
+  var pack16;
+  var pack16be;
+  var pack32;
+  var pack32_be;
+  var pack64;
+  var pack_inventory_payload;
+  var pack_message_header;
+  var pack_messages;
+  var pack_net_addr;
+  var pack_tx;
+  var pack_tx_ins;
+  var pack_tx_outs;
+  var pack_uint;
+  var sha256_sha256_4;
+  var _ref;
   var __hasProp = Object.prototype.hasOwnProperty;
   assert = require('assert');
   crypto = require('crypto');
@@ -8,8 +33,12 @@
   nullPad12 = helpers.nullPad12, sha256_sha256_4 = helpers.sha256_sha256_4;
   MAIN_MAGIC = helpers.MAIN_MAGIC, EMPTY_BUFFER = helpers.EMPTY_BUFFER, IP_12 = helpers.IP_12;
   _ref = require('./value_packers'), pack_uint = _ref.pack_uint, pack_net_addr = _ref.pack_net_addr, pack16 = _ref.pack16, pack16be = _ref.pack16be, pack32 = _ref.pack32, pack32_be = _ref.pack32_be, pack64 = _ref.pack64;
-  pack_inventory_payload = function(x) {
-    var bufs, inv, _i, _len, _ref;
+  pack_inventory_payload = x => {
+    var bufs;
+    var inv;
+    var _i;
+    var _len;
+    var _ref;
     bufs = [pack_uint(x.inventory.length)];
     _ref = x.inventory;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -18,8 +47,11 @@
     }
     return joinBuffers(bufs);
   };
-  pack_tx_ins = function(arr) {
-    var bufs, y, _i, _len;
+  pack_tx_ins = arr => {
+    var bufs;
+    var y;
+    var _i;
+    var _len;
     bufs = [pack_uint(arr.length)];
     for (_i = 0, _len = arr.length; _i < _len; _i++) {
       y = arr[_i];
@@ -27,8 +59,11 @@
     }
     return joinBuffers(bufs);
   };
-  pack_tx_outs = function(arr) {
-    var bufs, y, _i, _len;
+  pack_tx_outs = arr => {
+    var bufs;
+    var y;
+    var _i;
+    var _len;
     bufs = [pack_uint(arr.length)];
     for (_i = 0, _len = arr.length; _i < _len; _i++) {
       y = arr[_i];
@@ -36,24 +71,26 @@
     }
     return joinBuffers(bufs);
   };
-  pack_tx = function(x) {
-    return joinBuffers([pack32(x.version), pack_tx_ins(x.ins), pack_tx_outs(x.outs), pack32(x.lock_time)]);
-  };
+  pack_tx = x => joinBuffers([pack32(x.version), pack_tx_ins(x.ins), pack_tx_outs(x.outs), pack32(x.lock_time)]);
   message_packers = {
-    version: function(x) {
+    version(x) {
       return joinBuffers([pack32(x.version), pack64(x.services), pack64(x.timestamp), pack_net_addr(x.addr_me), pack_net_addr(x.addr_you), x.nonce, pack_uint(x.sub_version_num.length), x.sub_version_num, pack32(x.start_height)]);
     },
-    verack: function(x) {
+    verack(x) {
       return EMPTY_BUFFER;
     },
-    ping: function(x) {
+    ping(x) {
       return EMPTY_BUFFER;
     },
-    getaddr: function(x) {
+    getaddr(x) {
       return EMPTY_BUFFER;
     },
-    addr: function(x) {
-      var addr, bufs, _i, _len, _ref;
+    addr(x) {
+      var addr;
+      var bufs;
+      var _i;
+      var _len;
+      var _ref;
       bufs = [pack_uint(x.addresses.length)];
       _ref = x.addresses;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -62,13 +99,17 @@
       }
       return joinBuffers(bufs);
     },
-    alert: function(x) {
+    alert(x) {
       return joinBuffers([pack_uint(x.message.length), x.message, pack_uint(x.signature.length), x.signature]);
     },
     inv: pack_inventory_payload,
     getdata: pack_inventory_payload,
-    getblocks: function(x) {
-      var bufs, hash, _i, _len, _ref;
+    getblocks(x) {
+      var bufs;
+      var hash;
+      var _i;
+      var _len;
+      var _ref;
       bufs = [];
       if (x.version != null) {
         bufs.push(pack32(x.version));
@@ -83,8 +124,12 @@
       return joinBuffers(bufs);
     },
     tx: pack_tx,
-    block: function(x) {
-      var bufs, tx, _i, _len, _ref;
+    block(x) {
+      var bufs;
+      var tx;
+      var _i;
+      var _len;
+      var _ref;
       bufs = [pack32(x.version), prev_block, merkle_root, pack32(timestamp), pack32(difficulty), pack32(nonce), pack_uint(x.transactions.length)];
       _ref = x.transactions;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -93,13 +138,13 @@
       }
       return joinBuffers(bufs);
     },
-    checkorder: function(x) {
+    checkorder(x) {
       throw new Error("TODO");
     },
-    submitorder: function(x) {
+    submitorder(x) {
       throw new Error("TODO");
     },
-    reply: function(x) {
+    reply(x) {
       throw new Error("TODO");
     }
   };
@@ -108,8 +153,9 @@
     if (!__hasProp.call(message_packers, commandName)) continue;
     NULL_PADDED_COMMAND_NAMES[commandName] = nullPad12(new Buffer(commandName));
   }
-  pack_message_header = function(commandName, payload) {
-    var bufs, magic;
+  pack_message_header = (commandName, payload) => {
+    var bufs;
+    var magic;
     magic = MAIN_MAGIC;
     bufs = [magic, NULL_PADDED_COMMAND_NAMES[commandName], pack32(payload.length)];
     if (!(commandName === 'version' || commandName === 'verack')) {
@@ -117,8 +163,14 @@
     }
     return joinBuffers(bufs);
   };
-  exports.pack_messages = pack_messages = function(messages) {
-    var bufs, f, header, payload, _i, _len, _ref;
+  exports.pack_messages = pack_messages = messages => {
+    var bufs;
+    var f;
+    var header;
+    var payload;
+    var _i;
+    var _len;
+    var _ref;
     bufs = [];
     for (_i = 0, _len = messages.length; _i < _len; _i++) {
       _ref = messages[_i], commandName = _ref[0], payload = _ref[1];
@@ -131,4 +183,4 @@
     }
     return joinBuffers(bufs);
   };
-}).call(this);
+})).call(this);
